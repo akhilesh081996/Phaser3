@@ -11,8 +11,10 @@ class MyGame extends Phaser.Scene
 
     preload ()
     {
-        this.load.image('logo', logoImg);
-        this.load.image('logo1', logoImg1);
+        // this.load.image('logo', logoImg);
+        // this.load.image('logo1', logoImg1);
+
+   
     }
       
     create ()
@@ -29,7 +31,7 @@ class MyGame extends Phaser.Scene
             });
 
 
-        const clickButton = this.add.text(100, 100, 'Click me!', { fill: '#0f0' })
+        const clickButton = this.add.text(500, 300, 'Click me!', { fill: '#000000' })
         .setInteractive()
         .on('pointerdown', () => this.updateClickCountText(++clickCount) );
   
@@ -50,6 +52,7 @@ var config = {
     scene: {
         create: create
     }
+    
 };
 
 var game = new Phaser.Game(config);
@@ -77,6 +80,7 @@ function create ()
     ];
 
     this.textures.generate('chick', { data: chick, pixelWidth: pixelWidth });
+    console.log(this.textures,'generate')
 
     var burd = [
       '..E.............',
@@ -96,6 +100,7 @@ function create ()
     ];
 
     this.textures.generate('burd', { data: burd, pixelWidth: pixelWidth });
+    console.log(this.textures,'generate burd')
 
     var alien = [
       '....44........',
@@ -344,7 +349,7 @@ function create ()
       this.textures.generate('joystick2', { data: joystick2, pixelWidth: pixelWidth });
       
       var joystick3 = [
-        '..............',
+        // '..............',
         '...',
         '...wqw48333....',
         '.we...34....',
@@ -383,7 +388,22 @@ function create ()
     this.add.image(550, 500, 'joypad').setOrigin(0, 1);
     this.add.image(750, 500, 'joystick3').setOrigin(0, 1);
     this.add.image(950, 500, 'star1').setOrigin(0, 1);
+   
 
+
+    this.button = this.add.sprite(600 ,556, 'start').setInteractive();
+        // this.button.on('pointerover', function(){this.button.setTint(0xf0ff00);}, this)
+        // this.button.on('pointerout', function(){this.button.setTint(0xffffff);}, this)
+        this.button.on('pointerdown', function(){
+                  console.log('hello',this.button)
+            
+        });
+    
+
+        
 
 }
+
+
+
 
