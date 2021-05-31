@@ -33,22 +33,14 @@
   <body>
     <script type="text/javascript">
       var game = new Phaser.Game(436, 329, Phaser.AUTO, 'slot-game', { preload: preload, create: create, update: update});
-      var slotmachine = 'https://n1rvanas.github.io/Slot_Machine/img/slotmachine.png'
-      var bar = ': https://n1rvanas.github.io/Slot_Machine/img/bar.png'
-      var bell = 'https://n1rvanas.github.io/Slot_Machine/img/bell.png'
-      var cherry = 'https://n1rvanas.github.io/Slot_Machine/img/cherry.png'
-      var orange = 'https://n1rvanas.github.io/Slot_Machine/img/orange.png'
-      var plum = 'https://n1rvanas.github.io/Slot_Machine/img/plum.png'
-      var seven = 'https://n1rvanas.github.io/Slot_Machine/img/seven.png'
-     
       function preload() {
-        game.load.image('slot-machine', 'slotmachine');
-        game.load.image('bar', 'bar');
-        game.load.image('bell', 'bell');
-        game.load.image('cherry', 'cherry');
-        game.load.image('orange', 'orange');
-        game.load.image('plum', 'plum');
-        game.load.image('seven', 'seven');   
+        game.load.image('slot-machine', 'img/slotmachine.png');
+        game.load.image('bar', 'img/bar.png');
+        game.load.image('bell', 'img/bell.png');
+        game.load.image('cherry', 'img/cherry.png');
+        game.load.image('orange', 'img/orange.png');
+        game.load.image('plum', 'img/plum.png');
+        game.load.image('seven', 'img/seven.png');   
       }
 
 
@@ -61,13 +53,13 @@
       var reels_cnt = 5;
       var reel_start_y = -70;
       var reel_end_y = 20;
-      var create_reels = [{x:20, y:-70}, {x:100, y:-70}, {x:200, y:-70}, {x:300, y:-70} ,{x:400, y:-70}];
+      var create_reels = [{x:20, y:-70}, {x:80, y:-70}, {x:180, y:-70}, {x:280, y:-70} ,{x:380, y:-70}];
       var reels = [
         ['bar', 'bell', 'cherry', 'orange', 'plum', 'seven'],
+        ['bar', 'cherry', 'orange', 'plum' ,'bell' , 'seven'],
+        ['bar', 'bell',  'plum', 'cherry', 'orange', 'seven'],
         ['bar', 'bell', 'cherry', 'orange', 'plum', 'seven'],
-        ['bar', 'bell', 'cherry', 'orange', 'plum', 'seven'],
-        ['bar', 'bell', 'cherry', 'orange', 'plum', 'seven'],
-        ['bar', 'bell', 'cherry', 'orange', 'plum', 'seven']
+        ['bar',  'orange', 'bell', 'cherry',  'plum', 'seven']
       ];
 
       function create() {
@@ -79,6 +71,7 @@
           createReel(i,create_reels[i].x, create_reels[i].y)
         }
 
+        // game.add.sprite(0, 0, 'slot-machine');
         game.add.sprite(0, 0, 'slot-machine');
         spineButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -89,7 +82,7 @@
         slotsColoumns[index].x=x;
         slotsColoumns[index].y=y;
         for(var i=0; i<slots_cnt; ++i){
-          slots[index][i] = slotsColoumns[index].create(0, i*symbol_height, reels[index][i+2]);
+          slots[index][i] = slotsColoumns[index].create(0, i*symbol_height, reels[index][i+5]);
         }
       }
 
@@ -97,20 +90,19 @@
       }
 
       function rotateArray() {
-        console.log('hello')
           var rotate = setInterval(function(){
             for(var i=0; i<reels_cnt; ++i){
               setTimeout(function(i){slotsColoumns[i].y += 5;
                 if(slotsColoumns[i].y>reel_end_y){
                   slotsColoumns[i].y = reel_start_y;
-
                   var element = reels[i].pop();
                   reels[i].unshift(element);
                   for(var j=0; j<slots_cnt; ++j){
+                    console.log(reels[i][j+2],0,'reels[i][j+2]')
                     slots[i][j].loadTexture(reels[i][j+2], 0);
-                  }
-                      
-                }},i*reels_start_delay,i);
+                  }     
+                }},
+                i*reels_start_delay,i);
             }
         },0);
 
